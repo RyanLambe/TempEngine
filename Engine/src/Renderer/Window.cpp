@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Window.h"
 
 Engine::Window::Window(const std::string& title, int width, int height) {
@@ -8,6 +9,12 @@ Engine::Window::Window(const std::string& title, int width, int height) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    if(!window){
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return;
+    }
+    glfwMakeContextCurrent(window);
 }
 
 Engine::Window::~Window() {
@@ -16,7 +23,16 @@ Engine::Window::~Window() {
     glfwTerminate();
 }
 
-bool Engine:: Window::Update() {
+void Engine:: Window::Update() {
+
+    glfwSwapBuffers(window);
     glfwPollEvents();
-    return !glfwWindowShouldClose(window);
+}
+
+bool Engine::Window::ShouldClose() {
+    return glfwWindowShouldClose(window);
+}
+
+GLFWwindow *Engine::Window::getGLFWWindow() {
+    return window;
 }

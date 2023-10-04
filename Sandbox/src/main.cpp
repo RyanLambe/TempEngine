@@ -1,12 +1,13 @@
 #include <iostream>
-#include <Window.h>
+
+#include "Renderer/Renderer.h"
 
 int main() {
     std::cout << "Hello World\n";
 
-    Engine::Window window("Hello Window", 1280, 720);
+    Engine::Renderer renderer("Hello Window", 1280, 720);
 
-    while(window.Update());
+    while(renderer.Render());
 
     return 0;
 }
